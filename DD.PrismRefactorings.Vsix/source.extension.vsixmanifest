@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+    <Metadata>
+        <Identity Id="DD.PrismRefactorings..6339b1e7-e826-4a69-a67d-a8b943843e8a" Version="1.0" Language="en-US" Publisher="Daniel Dreibrodt"/>
+        <DisplayName>Prism Property Refactorings</DisplayName>
+        <Description xml:space="preserve">Provides a code fix to transform an auto-property of a view model to a property with a backing field whose setter uses Prism's BindableBase.SetProperty pattern.</Description>
+        <License>LICENSE.txt</License>
+        <PreviewImage>preview.png</PreviewImage>
+        <Tags>Prism Refactoring CodeFix Auto Property BindableBase SetProperty</Tags>
+    </Metadata>
+    <Installation>
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.9,17.0)" />
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="DD.PrismRefactorings" Path="|DD.PrismRefactorings|"/>
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.9,17.0)" DisplayName="Visual Studio core editor" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.Roslyn.LanguageServices" Version="[15.9,17.0)" DisplayName="Roslyn Language Services" />
+    </Prerequisites>
+</PackageManifest>
