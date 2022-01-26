@@ -9,6 +9,7 @@ namespace DD.PrismRefactorings
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+
     using Microsoft.CodeAnalysis;
     using Microsoft.CodeAnalysis.CodeActions;
     using Microsoft.CodeAnalysis.CodeRefactorings;
@@ -132,8 +133,17 @@ namespace DD.PrismRefactorings
                             SyntaxFactory.SingletonSeparatedList(SyntaxFactory.VariableDeclarator(SyntaxFactory.Identifier(backingFieldName)))))
                 .WithModifiers(SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxFactory.TriviaList(indentation), SyntaxKind.PrivateKeyword, SyntaxFactory.TriviaList(SyntaxFactory.Space))));
 
+            var accessors = propertyDeclaration.AccessorList?.Accessors;
+            var getter = accessors?.FirstOrDefault(a => a.Kind() == SyntaxKind.GetAccessorDeclaration);
+            var setter = accessors?.FirstOrDefault(a => a.Kind() == SyntaxKind.SetAccessorDeclaration);
+
             var newPropertyDeclaration = propertyDeclaration
-                .WithAccessorList(SyntaxFactory.AccessorList(SyntaxFactory.List(new[] { CreateGetter(backingFieldName), CreateSetter(backingFieldName) })));
+                .WithAccessorList(SyntaxFactory.AccessorList(SyntaxFactory.List(
+                    new[]
+                    {
+                        CreateGetter(backingFieldName).WithModifiers(getter.Modifiers),
+                        CreateSetter(backingFieldName).WithModifiers(setter.Modifiers),
+                    })));
 
             var newRoot = root.ReplaceNode(propertyDeclaration, newPropertyDeclaration);
             classDeclaration = classDeclaration != null ? newRoot.DescendantNodes().OfType<ClassDeclarationSyntax>().FirstOrDefault(c => c.Identifier.ValueText == classDeclaration.Identifier.ValueText) : null;
