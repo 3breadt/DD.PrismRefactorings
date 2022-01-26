@@ -124,7 +124,7 @@ namespace DD.PrismRefactorings
                 }
             }
 
-            var indentation = propertyDeclaration.GetLeadingTrivia().LastOrDefault(t => t.Kind() == SyntaxKind.WhitespaceTrivia);
+            var indentation = propertyDeclaration.GetLeadingTrivia().LastOrDefault(t => t.IsKind(SyntaxKind.WhitespaceTrivia));
 
             var newFieldDeclaration =
                 SyntaxFactory.FieldDeclaration(
